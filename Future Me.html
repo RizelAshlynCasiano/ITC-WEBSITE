@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Me: Write to Your Future Self</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fcf8f3, #f3eae2);
+            color: #5a5a5a;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(145deg, #f7efe8, #ece2d6);
+            color: #5a5a5a;
+            font-size: 3.5em;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 2px 8px rgba(90, 90, 90, 0.1);
+        }
+
+        header span {
+            color: #b88942;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #ece2d6;
+            padding: 10px 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            color: #5a5a5a;
+            font-weight: bold;
+            transition: color 0.3s, border-bottom 0.3s;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        nav a.active {
+            color: #b88942;
+            border-bottom: 2px solid #b88942;
+        }
+
+        nav a:hover {
+            color: #b88942;
+        }
+
+        .container {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #e0dacc;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 50px auto;
+            backdrop-filter: blur(20px);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #b88942;
+            font-size: 2.5em;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 2px 6px rgba(184, 137, 66, 0.2);
+        }
+
+        .description {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: #7a7a7a;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #7a7a7a;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e0dacc;
+            background: rgba(255, 255, 255, 0.6);
+            color: #5a5a5a;
+            font-size: 1.1em;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a3a3a3;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #b88942;
+            box-shadow: 0 0 10px 2px rgba(184, 137, 66, 0.4);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .glowing-button {
+            background: linear-gradient(45deg, #e0c78c, #b88942);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.3em;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(184, 137, 66, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .glowing-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(184, 137, 66, 0.4);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, #ece4d9, #f9f5ec);
+            color: #5a5a5a;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #b88942;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .modal-content h1 {
+            margin-top: 0;
+            color: #b88942;
+        }
+
+        .modal-content p,
+        .modal-content ul {
+            line-height: 1.6;
+            color: #5a5a5a;
+            text-align: left;
+        }
+
+        .modal-content .close {
+            color: #b88942;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            float: right;
+            cursor: pointer;
+        }
+
+        .modal-content .close:hover {
+            text-decoration: underline;
+        }
+
+        .modal-content h2 {
+            color: gray;
+            font-size: 1.4em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .confirmation-message {
+            text-align: center;
+            font-size: 1.5em;
+            color: #b88942;
+            margin-top: 30px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        Future Me: <span>Message to Yourself</span>
+    </header>
+
+    <nav>
+        <a href="#" data-target="home" onclick="showSection('home')">Home</a>
+        <a href="#" data-target="about" onclick="showSection('about')">About Us</a>
+        <a href="#" data-target="contact" onclick="showSection('contact')">Contact Us</a>
+    </nav>
+
+    <div id="home" class="section active">
+        <div class="container">
+            <h2>Send a Message to Your Future Self!</h2>
+            <p class="description">
+                Imagine writing a message to yourself today, to be opened in the future. It could be a reminder, an
+                aspiration, or a reflection on your current life.
+            </p>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" placeholder="Write a message to your future self" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="deliveryDate">When do you want your message to be delivered?</label>
+                    <input type="date" id="deliveryDate" name="deliveryDate" required>
+                </div>
+
+                <button type="submit" class="glowing-button">Send Message</button>
+            </form>
+            <p id="confirmationMessage" class="confirmation-message">Thank you for your message! We'll deliver it to you on your selected date.</p>
+        </div>
+    </div>
+
+    <div id="about" class="section">
+        <div class="container">
+            <h2>About Us</h2>
+            <p class="description">
+               Welcome to Future Me! Our mission is to help you stay connected to your goals, dreams, and aspirations. Write a letter to your future self and have it delivered on a specific date to reflect on your journey. We are here to inspire, motivate, and remind you of your own words of encouragement.
+            </p>
+        </div>
+    </div>
+
+    <div id="contact" class="section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>We would love to hear from you! If you have any questions or feedback, feel free to reach out to us:</p>
+            <ul>
+                <li>Email: help_us@futureme.com</li>
+                <li>Phone: (046) 476-2704</li>
+                <li>Address: 123 Future Lane, Inspiration City, Dreamland</li>
+            </ul>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Future Me | <a href="#" id="privacyPolicyLink">Privacy Policy</a></p>
+    </footer>
+
+    <div id="privacyPolicy" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close" onclick="document.getElementById('privacyPolicy').style.display='none'">&times;</a>
+            <h1>Privacy Policy</h1>
+            <p>
+                At Future Me, your privacy is of utmost importance to us. This Privacy Policy outlines how we collect,
+                use, and protect your personal information.
+            </p>
+            <h2>Information We Collect</h2>
+            <p>We collect the following information when you use our service:</p>
+            <ul>
+                <li>Your name and email address.</li>
+                <li>Your message to your future self.</li>
+                <li>The selected delivery date for your message.</li>
+            </ul>
+            <h2>How We Use Your Information</h2>
+            <p>
+                Your information is used solely to deliver your message to your future self on the specified date. We do
+                not share, sell, or distribute your personal data to third parties.
+            </p>
+            <h2>Data Protection</h2>
+            <p>
+                We use secure servers and encryption to protect your information. However, no online system is entirely
+                secure, and we cannot guarantee absolute security.
+            </p>
+            <h2>Your Rights</h2>
+            <p>
+                You have the right to request access to your data or request deletion of your data at any time by
+                contacting us at support@futureme.com.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('privacyPolicyLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('privacyPolicy').style.display = 'flex';
+        });
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('privacyPolicy')) {
+                document.getElementById('privacyPolicy').style.display = 'none';
+            }
+        };
+
+        function showSection(section) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(function(sectionElement) {
+                sectionElement.classList.remove('active');
+            });
+
+            document.getElementById(section).classList.add('active');
+
+            const links = document.querySelectorAll('nav a');
+            links.forEach(function(link) {
+                link.classList.remove('active');
+            });
+            document.querySelector(`nav a[data-target="${section}"]`).classList.add('active');
+        }
+
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            document.getElementById('confirmationMessage').style.display = 'block'; // Show confirmation message
+            this.reset(); // Reset form fields
+        });
+    </script>
+</body>
+
+</html>
